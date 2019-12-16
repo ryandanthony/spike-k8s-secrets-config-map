@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secret
+type: Opaque
+stringData:
+  mysecretvar: "my secret var"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap
+data:
+  MYCONFIGVAR: "my config map var"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  labels:
+    app: test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: test
+        image: kubernetes-config-example:v1
+        env:
+         - name: TEST_MYENVVAR
+           value: "my environment var"        
+        volumeMounts:
+        - name: config-volume
+          mountPath: /test/config     
+        - name: secrets-volume
+          mountPath: /test/secrets                  
+      volumes:
+       - name: config-volume
+         configMap:
+            name: test-configmap
+       - name: secrets-volume
+         secret:
+            secretName: test-secret

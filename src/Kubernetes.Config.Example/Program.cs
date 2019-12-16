@@ -23,7 +23,10 @@ namespace Kubernetes.Config.Example
                 })
                 .ConfigureLogging((hostContext, configLogging) =>
                 {
-                    configLogging.AddConsole();
+                    //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    //{
+                        configLogging.AddConsole();
+                    //}
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
