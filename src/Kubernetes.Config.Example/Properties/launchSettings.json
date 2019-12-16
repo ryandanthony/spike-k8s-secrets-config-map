@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Kubernetes.Config.Example": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "TEST_MYENVVAR": "MYENVVAR_VAL"
+      }
+    }
+  }
+}
